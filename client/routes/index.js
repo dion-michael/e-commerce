@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const userController = require('../controllers/userController')
 const images = require('../helpers/images')
-router.use('/cart', require('./cartRoutes.js'))
-router.use('/products', require('./productRoutes.js'))
+router.use('/cart', require('./cartRoutes.js.js'))
+router.use('/products', require('./productRoutes.js.js'))
 router.post('/register', userController.create)
 router.post('/signin', userController.signIn)
 router.post('/upload',
