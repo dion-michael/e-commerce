@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const DB_PATH = "mongodb://localhost/ecommerce_" + process.env.NODE_ENV
+const DB_PATH = process.env.DB_PATH + '_' + process.env.NODE_ENV
 mongoose.connect(DB_PATH, {
     useNewUrlParser: true
 })
