@@ -10,7 +10,9 @@ const store = new vuex.Store({
         cart: {},
         cartLength: 0,
         products: {},
-        searchQuery: ""
+        searchQuery: "",
+        userProducts: [],
+        product: {}
     },
     mutations: {
         setLogin(state, v) {
@@ -27,6 +29,12 @@ const store = new vuex.Store({
         },
         setProducts(state, products) {
             state.products = products
+        },
+        setUserProducts(state, v) {
+            state.userProducts = v
+        },
+        setOneProduct(state, product) {
+            state.product = product
         }
     },
     actions: {
@@ -122,6 +130,56 @@ const store = new vuex.Store({
                     Swal.fire("Bye!", "You've been signed out", "success");
                 }
             });
+        },
+        getUserProducts({
+            commit
+        }) {
+            console.log('/products/owner/' + localStorage.getItem('userId'));
+            api({
+                url: '/products/owner/' + localStorage.getItem('userId'),
+                method: "GET",
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            }).then(({
+                data
+            }) => {
+                commit('setUserProducts', data)
+            }).catch(error => {
+                console.log(error.response);
+            })
+        },
+        getOneProduct({
+            commit
+        }, productId) {
+            api({
+                url: "products/" + productId,
+                method: "GET",
+                headers: {
+                    token: localStorage.getItem('token')
+                }
+            }).then(found => {
+                commit('setOneProduct', found.data)
+            }).catch(error => {
+                console.log(error.response);
+            })
+        },
+        updateOneProduct({
+            commit
+        }, newData) {
+            api({
+                url: "products/" + newData.productId,
+                method: "PUT",
+                headers: {
+                    token: localStorage.getItem('token')
+                },
+                data: newData
+            }).then(success => {
+                this.dispatch('getUserProducts')
+                this.dispatch('getOneProduct')
+            }).catch(error => {
+                console.log(error.response);
+            })
         }
     }
 })

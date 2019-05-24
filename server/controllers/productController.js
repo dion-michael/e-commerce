@@ -22,6 +22,18 @@ class productController {
         }
     }
 
+    static getUserProduct(req, res) {
+        console.log(req.params.userId);
+        Product.find({
+                seller: req.params.userId
+            }).populate('seller')
+            .then(found => {
+                res.json(found)
+            }).catch(err => {
+                res.status(500).json(err.message)
+            })
+    }
+
     static async create(req, res) {
         try {
             let product = new Product({
@@ -42,6 +54,7 @@ class productController {
 
     static async update(req, res) {
         try {
+            console.log(req.body);
             let product = await Product.findOneAndUpdate(req.params.id, {
                 $set: {
                     product_name: req.body.product_name,
@@ -49,7 +62,6 @@ class productController {
                     price: req.body.price,
                     seller: req.loggedUser.id,
                     stock: req.body.stock,
-                    image: req.body.image,
                     updatedAt: new Date()
                 }
             })

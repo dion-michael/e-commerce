@@ -96,7 +96,8 @@ export default {
       drawer: true,
       links: [
         { icon: "home", text: "Home", route: "/" },
-        { icon: "shopping_cart", text: "Cart", route: "/cart" }
+        { icon: "shopping_cart", text: "Cart", route: "/cart" },
+        { icon: "settings", text: "Manage your products", route: "/manage" }
       ],
       items: [
         { title: "Register", route: "/register" },

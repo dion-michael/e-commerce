@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
+    ;
     if (req.headers.hasOwnProperty('token')) {
         jwt.verify(req.headers.token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
@@ -10,6 +11,7 @@ module.exports = (req, res, next) => {
             } else {
                 console.log(decoded);
                 req.loggedUser = decoded
+                console.log(req.loggedUser);
                 next()
             }
         })

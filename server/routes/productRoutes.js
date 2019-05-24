@@ -5,6 +5,7 @@ const authorize = require('../middleware/authorize')
 
 router.post('/', authenticate, productController.create)
 router.get('/', productController.readAll)
+router.get('/owner/:userId', productController.getUserProduct)
 router.get('/:id', productController.readOne)
 router.put('/:id', authenticate, authorize, productController.update)
 router.delete('/:id', authenticate, authorize, productController.delete)
